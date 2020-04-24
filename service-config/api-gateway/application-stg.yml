@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  address: api-gateway
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://registry-service:8761/eureka/
+security:
+   oauth2:
+      resource:
+         user-info-uri: http://api-gateway:8080/auth/user/current
+         token-info-uri: http://api-gateway:8080/auth/oauth/check_token

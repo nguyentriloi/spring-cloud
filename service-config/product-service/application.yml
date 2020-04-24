@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /product
+  compression:
+    enabled: true
+    mime-types: application/json
+spring:
+  cloud:
+    circuitbreaker:
+      hystrix:
+        enabled: true
+feign:
+  httpclient:
+    connection-timeout: 30000
+    time-to-live: 60000
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+management:
+  endpoints:
+    web:
+      cors:
+        allowed-origins: "*"
+        allowed-methods: "*"
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

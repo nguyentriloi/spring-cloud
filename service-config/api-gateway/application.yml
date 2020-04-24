@@ -1,0 +1,53 @@
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+#        - AddRequestHeader=X-Request-Foo, Bar
+#        - AddResponseHeader=X-Response-Foo, Bar
+      routes:
+        - id: auth-service
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth/**
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/payment/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeader: "*"
+            allowCredentials: true
+            allowedMethods: "*"
+        add-to-simple-url-handler-mapping: true
+      httpclient:
+        connect-timeout: 30000
+        response-timeout: 30000
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: false
+    hostname: localhost
+server:
+  port: 8080
+management:
+  endpoints:
+    exposure:
+      include: "*"
+  endpoint:
+    health:
+      show-details: always

@@ -1,0 +1,15 @@
+server:
+  port: 8761 #the default port used for eureka servers
+  address: registry-service
+eureka:
+  instance:
+    prefer-ip-address: false
+  client:
+    fetch-registry: true
+    service-url:
+      defaultZone: http://registry-service:8761/eureka/
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://api-gateway:8080/auth/user/current
+      token-info-uri: http://api-gateway:8080/auth/oauth/check_token
